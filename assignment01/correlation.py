@@ -7,7 +7,7 @@ def crossCorr(x, y):
 
     corr_length = len(x) + len(y) - 1
     corr = np.zeros(corr_length)
-    padded_x = np.hstack((np.zeros((len(y) - 1)), x, np.zeros(len(y) - 1)))
+    padded_x = np.hstack((np.zeros((len(y))), x, np.zeros(len(y) - 1)))
 
     for n in range(corr_length):
         corr[n] = np.dot(padded_x[n:n+len(y)], y)
@@ -15,6 +15,7 @@ def crossCorr(x, y):
     norm_corr = corr/np.max(corr)
 
     return norm_corr
+
 
 def loadSoundFile(filename):
     _, audio = read(filename)
@@ -30,7 +31,7 @@ def findSnarePosition(snareFilename, drumloopFilename):
     snare = loadSoundFile(snareFilename)
     drums = loadSoundFile(drumloopFilename)
 
-    corr = crossCorr(drums, snare)
+    corr = crossCorr(snare, drums)
 
     # Assumed a threshold of 0.8 would be a safe value after looking at the plot from Q.1
     corr_thresholded = np.where(corr >0.8, corr, 0)
