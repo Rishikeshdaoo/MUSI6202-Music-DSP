@@ -1,5 +1,5 @@
 Mean: 9.438048064977854e-19
-Mean abs: 3.137367209963592e-16
-Standard dev: 4.120100533045086e-16
-Time of my Convolution: 0.70093989
-Time of Scipy Convolution: 0.0085659
+Mean Absolute: 3.137367209963592e-16
+Standard Deviation: 4.120100533045086e-16
+Time of my convolution: 0.7219440937042236
+Time of Scipy convolution: 0.012704133987426758

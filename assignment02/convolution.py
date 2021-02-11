@@ -31,11 +31,11 @@ def CompareConv(x, h):
     scipy_conv = convolve(x, h)
     timer[1] = time.time() - current_time
 
-    mean_diff = np.mean(my_conv - scipy_conv)
-    mean_abs_diff = np.mean(np.abs(my_conv - scipy_conv))
-    std_dev = np.std(my_conv - scipy_conv)
+    m = np.mean(my_conv - scipy_conv)
+    mabs = np.mean(np.abs(my_conv - scipy_conv))
+    stdev = np.std(my_conv - scipy_conv)
 
-    return mean_diff, mean_abs_diff, std_dev, timer
+    return m, mabs, stdev, timer
 
 
 def readwav(filename):
@@ -78,12 +78,20 @@ if __name__ == "__main__":
     piano = readwav("piano.wav")
     impulse_response = readwav("impulse-response.wav")
 
-    myConv = CompareConv(piano, impulse_response)
+    compConv = CompareConv(piano, impulse_response)
+
+    fo = open("./results/02-convolutionStats.txt", "w+")
+
+    fo.writelines("Mean: " + str(compConv[0]) + '\n')
+    fo.writelines("Mean Absolute: " + str(compConv[1]) + '\n')
+    fo.writelines("Standard Deviation: " + str(compConv[2]) + '\n')
+    fo.writelines("Time of my convolution: " + str(compConv[3][0]) + '\n')
+    fo.writelines("Time of Scipy convolution: " + str(compConv[3][1]) + '\n')
 
     time = np.linspace(0, len(y_time)-1, len(y_time))
 
     plt.plot(time, y_time)
-    plt.xlabel("Time (In Number of Samples)")
+    plt.xlabel("Time (In Samples)")
     plt.ylabel("Signal Amplitude")
     plt.title("Time Domain Convolution of two signals")
     plt.show()
