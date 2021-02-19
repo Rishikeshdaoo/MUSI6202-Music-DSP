@@ -1,0 +1,13 @@
+Q.3
+
+4:
+
+Sampling rate - 44100 Hz
+Length of Signal - Duration * Sampling rate = 44100 * 0.5 = 22050 samples
+
+Frequency resolution = Sampling Rate/Length of Signal = 44100/22050 = 2 Hz
+
+
+5:
+
+Zero padding a signal increases the length of the signal, which results in a longer DFT. Longer DFT with the same Sampling rate increases the number of frequency bins, that are more closely spaced. So, we get a higher resolution in the frequency domain.
