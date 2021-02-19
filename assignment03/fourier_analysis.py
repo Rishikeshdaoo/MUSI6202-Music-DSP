@@ -146,8 +146,6 @@ if __name__ == "__main__":
 
     f, XAbs, XPhase, _, _ = computeSpectrum(x_sine, 44100)
 
-    generate_sine_sweep(f, XAbs)
-
     plt.figure(figsize=(10, 5))
     plt.suptitle("Magnitude and phase spectrum for Sinusoid (400 Hz)")
 
