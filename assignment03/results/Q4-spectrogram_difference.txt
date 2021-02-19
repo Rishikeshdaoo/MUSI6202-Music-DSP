@@ -2,6 +2,7 @@ Q.4
 
 We can see Spectral leakage in both the plots.
 
-In the case of Rectangular window, we see a lot of spectral leakage because the side lobes in rectangular window are very dominant. So we can see regions between the peaks also have some higher intensity regions.
+In the case of Rectangular window, we see a lot of spectral leakage because the side lobes in rectangular window are very dominant. 
+So we can see regions between the peaks also have some higher intensity regions.
 
 In case of Haan window, this effect is lesser, since the side lobes are not as dominant in this case.

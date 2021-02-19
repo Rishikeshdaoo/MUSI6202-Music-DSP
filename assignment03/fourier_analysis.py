@@ -75,7 +75,6 @@ def rect(L):
 def mySpecgram(x, block_size, hop_size, sampling_rate_Hz, window_type):
     x = x.T
 
-
     afWindow = np.zeros(block_size)
     if(window_type == 'hann'):
         afWindow = np.hanning(block_size)
@@ -99,53 +98,83 @@ def mySpecgram(x, block_size, hop_size, sampling_rate_Hz, window_type):
     return freq_vector, time_vector, magnitude_spectrogram
 
 
+# Attempt at the bonus question
+def generate_sine_sweep(f, X):
+
+    # My speculation (I am using the sine wave from Q1 and this particular code is tailored to this specific signal
+    # but the approach can be used for any spectrum) -
+    # When I analysed the 400 Hz sine wave, i realized that all the values are very close to zero,
+    # Except the value at Sample# 201.
+    # So if we make the calculations, from the number of samples and the sampling rate, we can conclude that
+    # this corresponds to the frequency bin for 400 Hz.
+    # So, I think if we want to create a sweep using this spectrum, we would have to make all the values
+    # non-zero (I will be making them same as the value at 400 Hz to demostrate here)
+
+    val = np.max(X)
+
+    for n in range(len(X)):
+        X[n] = val
+
+    # We would have all frequencies present in the signal
+    plt.plot(f, X)
+    plt.show()
+
+    # Not sure how to reconstruct the signal from the spectrum,
+    # Although I think we would need both magnitude and phase information, and not just one-half of the signal
+    # to reconstruct the signal (Not completely sure though).
+
+    return X
+
+
 if __name__ == "__main__":
     t, x_sine = generateSinusoidal(1.0, 44100, 400, 0.5, np.pi/2)
     t, x_square = generateSquare(1.0, 44100, 400, 0.5, 0)
 
-    # plt.plot(t, x_sine)
-    # plt.xlim(0, 0.005)
-    # plt.xlabel("Time (In seconds)")
-    # plt.ylabel("Amplitude")
-    # plt.title("Sinusoid of frequency 400 Hz and phase pi/2")
-    # plt.show()
+    plt.plot(t, x_sine)
+    plt.xlim(0, 0.005)
+    plt.xlabel("Time (In seconds)")
+    plt.ylabel("Amplitude")
+    plt.title("Sinusoid of frequency 400 Hz and phase pi/2")
+    plt.show()
 
-    # plt.plot(t, x_square)
-    # plt.xlim(0, 0.005)
-    # plt.xlabel("Time (In seconds)")
-    # plt.ylabel("Amplitude")
-    # plt.title("Square wave of frequency 400 Hz")
-    # plt.show()
+    plt.plot(t, x_square)
+    plt.xlim(0, 0.005)
+    plt.xlabel("Time (In seconds)")
+    plt.ylabel("Amplitude")
+    plt.title("Square wave of frequency 400 Hz")
+    plt.show()
 
-    # f, XAbs, XPhase, _, _ = computeSpectrum(x_sine, 44100)
+    f, XAbs, XPhase, _, _ = computeSpectrum(x_sine, 44100)
 
-    # plt.figure(figsize=(10, 5))
-    # plt.suptitle("Magnitude and phase spectrum for Sinusoid (400 Hz)")
+    generate_sine_sweep(f, XAbs)
 
-    # plt.subplot(1,2,1)
-    # plt.plot(f, XAbs)
-    # plt.xlabel("Frequency (In Hz)")
-    # plt.ylabel("Magnitude")
-    # plt.subplot(1,2,2)
-    # plt.plot(f, XPhase)
-    # plt.xlabel("Frequency (In Hz)")
-    # plt.ylabel("Phase (In Rad)")
-    # plt.show()
+    plt.figure(figsize=(10, 5))
+    plt.suptitle("Magnitude and phase spectrum for Sinusoid (400 Hz)")
 
-    # f, XAbs, XPhase, _, _ = computeSpectrum(x_square, 44100)
+    plt.subplot(1,2,1)
+    plt.plot(f, XAbs)
+    plt.xlabel("Frequency (In Hz)")
+    plt.ylabel("Magnitude")
+    plt.subplot(1,2,2)
+    plt.plot(f, XPhase)
+    plt.xlabel("Frequency (In Hz)")
+    plt.ylabel("Phase (In Rad)")
+    plt.show()
 
-    # plt.figure(figsize=(10, 5))
-    # plt.suptitle("Magnitude and phase spectrum for Square wave (400 Hz)")
+    f, XAbs, XPhase, _, _ = computeSpectrum(x_square, 44100)
 
-    # plt.subplot(1,2,1)
-    # plt.plot(f, XAbs)
-    # plt.xlabel("Frequency (In Hz)")
-    # plt.ylabel("Magnitude")
-    # plt.subplot(1,2,2)
-    # plt.plot(f, XPhase)
-    # plt.xlabel("Frequency (In Hz)")
-    # plt.ylabel("Phase (In Rad)")
-    # plt.show()
+    plt.figure(figsize=(10, 5))
+    plt.suptitle("Magnitude and phase spectrum for Square wave (400 Hz)")
+
+    plt.subplot(1,2,1)
+    plt.plot(f, XAbs)
+    plt.xlabel("Frequency (In Hz)")
+    plt.ylabel("Magnitude")
+    plt.subplot(1,2,2)
+    plt.plot(f, XPhase)
+    plt.xlabel("Frequency (In Hz)")
+    plt.ylabel("Phase (In Rad)")
+    plt.show()
 
     freq_vector_rect, time_vector_rect, magnitude_spectrogram_rect = mySpecgram(x_square, 2046, 1024, 44100, 'rect')
     freq_vector_hann, time_vector_hann, magnitude_spectrogram_hann = mySpecgram(x_square, 2046, 1024, 44100, 'hann')
